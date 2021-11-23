@@ -13,6 +13,7 @@ function Mypage() {
           <div></div>
           <div></div>
           <div>조은향</div>
+          </div>
       </div>
       <div className={classes.menu}>
         <a className={classes.menuItem} href="/product">TRENDING</a>
@@ -48,11 +49,6 @@ function Mypage() {
       </div>
       <div className={classes.bottom}>
       </div>
-        </div>
-      </div>
-      <div className={classes.menu}></div>
-      <div className={classes.info}></div>
-      <div className={classes.tab}></div>
     </div>
   )
 }

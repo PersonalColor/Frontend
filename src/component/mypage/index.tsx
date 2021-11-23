@@ -8,6 +8,7 @@ function Mypage() {
       <div className={classes.topbar}>
         <div className={classes.title}>Codibook</div>
         <div>검색어를 입력하세요</div>
+        <div>
           <div></div>
           <div></div>
           <div></div>
@@ -47,6 +48,11 @@ function Mypage() {
       </div>
       <div className={classes.bottom}>
       </div>
+        </div>
+      </div>
+      <div className={classes.menu}></div>
+      <div className={classes.info}></div>
+      <div className={classes.tab}></div>
     </div>
   )
 }

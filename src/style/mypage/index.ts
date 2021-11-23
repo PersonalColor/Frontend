@@ -10,11 +10,10 @@ export const mypageStyle = makeStyles(() =>
       justifyContent: 'space-around',
       backgroundColor: 'black',
       alignItems: 'center',
-      color: '#ffffff',
     },
 
     title: {
-      fontSize: '30px',
+      fontSize: '22px',
       fontWeight: 'bold',
       color: '#ffffff',
     },

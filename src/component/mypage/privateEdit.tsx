@@ -12,15 +12,18 @@ function PrivateEdit(props:IPrivateEditProps) {
 
     return <React.Fragment>
         <div className={classes.privateEdit}>
-            <h3>ID : 은향 조</h3>
-            <h3>Password</h3>
-            <h3>email</h3>
-            <h3>Password</h3>
-
-
-
-
+            <div className={classes.layout}>
+                <span>ID : 은향 조</span><br></br>
+                <span>nickname : </span>
+                    <input type="id" id="id" name="id"/><br></br>
+                <span>Password : </span>
+                    <input type="password" id="password" name="password"/><br></br>
+                <span>Email : </span>
+                    <input type="email" id="email" name="email"/><br></br><br></br>
+                <input type="button" value="change"/>
+            </div>
         </div>
+
         <div className={classes.overlay} onClick={() => {setModal(false)}}/>
     </React.Fragment>
 }

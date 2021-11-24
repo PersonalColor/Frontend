@@ -3,6 +3,7 @@ import './App.css'
 import Home from './component/home'
 import Mypage from './component/mypage'
 import Product from './component/product'
+import SelfDiagnosis from './component/selfDiagnosis'
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="/service" component={Home} />
         <Route path="/mypage" component={Mypage} />
         <Route path="/product" component={Product} />
+        <Route path="/self" component={SelfDiagnosis} />
       </Router>
     </div>
   )

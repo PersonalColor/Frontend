@@ -34,12 +34,11 @@ function Mypage() {
       </div>
       <div className={classes.middle}></div>
       <div className={classes.center}>
-        <div className={classes.person}>은향 조
+        <div className={classes.person}>은향 조</div>
         <button type="button" className={classes.person} onClick={() => {
           setOpenModal(true)
         }}>개인정보 수정
         </button>
-        </div>
       </div>
       <div className={classes.follow}>
         <div className={classes.following}>팔로잉</div>

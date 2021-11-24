@@ -1,6 +1,6 @@
 import { createStyles, makeStyles } from '@material-ui/core'
 
-export const privateEditStyle = makeStyles(() =>
+export const selfDiagnosisStyle = makeStyles(() =>
   createStyles({
     privateEdit: {
         position:'fixed',

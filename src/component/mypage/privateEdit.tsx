@@ -12,7 +12,10 @@ function PrivateEdit(props:IPrivateEditProps) {
 
     return <React.Fragment>
         <div className={classes.privateEdit}>
-            
+            <h3>ID : 은향 조</h3>
+            <h3>Password</h3>
+            <h3>email</h3>
+            <h3>Password</h3>
 
 
 

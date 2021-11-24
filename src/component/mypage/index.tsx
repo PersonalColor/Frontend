@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { mypageStyle } from '../../style/mypage'
+import PrivateEdit from './privateEdit'
 
 function Mypage() {
   const classes = mypageStyle()
+  const [openModal, setOpenModal] = useState<boolean>(false)
+
   return (
     <div className={classes.mypage}>
       <div className={classes.topbar}>
@@ -31,7 +34,12 @@ function Mypage() {
       </div>
       <div className={classes.middle}></div>
       <div className={classes.center}>
-        <div className={classes.person}>은향 조</div>
+        <div className={classes.person}>은향 조
+        <button type="button" className={classes.person} onClick={() => {
+          setOpenModal(true)
+        }}>개인정보 수정
+        </button>
+        </div>
       </div>
       <div className={classes.follow}>
         <div className={classes.following}>팔로잉</div>
@@ -49,6 +57,7 @@ function Mypage() {
       </div>
       <div className={classes.bottom}>
       </div>
+      {openModal === true && <PrivateEdit modal={openModal} setModal={setOpenModal}/>}
     </div>
   )
 }

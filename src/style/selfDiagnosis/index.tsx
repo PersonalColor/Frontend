@@ -1,28 +1,40 @@
 import { createStyles, makeStyles } from '@material-ui/core'
+import { convertCompilerOptionsFromJson } from 'typescript'
 
 export const selfDiagnosisStyle = makeStyles(() =>
   createStyles({
-    privateEdit: {
-        position:'fixed',
-        width:'500px',
-        height:'300px',
-        marginTop:'20%',
-        marginLeft:'35%',
-        left:0,
-        top:0,
-        backgroundColor:"#EDEDED",
-        zIndex: 100
+    head: {
+      //maxHeight : '25vw',
+      //maxWidth : '100vw',
+      //position:'fixed',
+      width:'100%',
+      height:'10%',
+      //backgroundSize: 'cover',
+      backgroundColor: '#FFA500',
+      //backgroundposition: 'center',
+      marginTop:'13%',
+      //fontFamily: '돋움',
+      fontSize: '30px',
+      fontWeight: 'bold',
+      //textAlign: 'center',
+      verticalAlign: 'middle',
+      lineHeight: '270%',
     },
-    overlay:{
-        position:'fixed',
-        left:0,
-        top:0,
-        backgroundColor:'black',
-        opacity: 0.3,
-        width:'100%',
-        height:'100%',
-        zIndex: 99,
-        cursor:'pointer'
+    article:{
+        //position:'fixed',
+        width:'70%',
+        height:'50%',
+        backgroundColor:'#C0C0C0',
+        margin:'1% 1% 1% 15%',
+        fontSize: '25px',
+        lineHeight: '200%',
+        textAlign: 'center'
+        //fontWeight: 'bold',
+        //opacity: 0.3,
+        //width:'100%',
+        //height:'100%',
+        //zIndex: 99,
+        //cursor:'pointer'
     },
     layout:{
       textAlign: 'left',

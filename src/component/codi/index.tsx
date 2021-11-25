@@ -1,65 +1,34 @@
-import { Clear, CloudUpload, ColorLens, FavoriteBorder, InsertPhoto, StarRounded } from '@material-ui/icons'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { useLocation } from 'react-router'
-import { productStyle } from '../../style/product'
-import qs from 'qs'
+import { Clear, CloudUpload, ColorLens, InsertPhoto, FavoriteBorder, StarRounded } from '@material-ui/icons'
+import React, { useEffect, useRef, useState } from 'react'
+import { codiStyle } from '../../style/codi'
 
-interface IProduct {
-  itemName: string
-  price: string
-  link: string
-  imgLink: string
-}
+type IHexCodeKey = '흰색' | '검정색' | '회색' | '갈색' | '베이지색' | '녹색' | '파란색' | '데님' | '보라색' | '노란색' | '분홍색' | '빨간색' | '주황색' | '은색' | '금색' | '기타'
 
 type IOriginData = {
-  [key in string]: {
-    [key in string]: IProduct[]
-  }
+  [key in string]: IProduct[]
 }
 
-type IHexCodeKey = '아이보리' | '오렌지레드' | '코랄핑크' | '카멜' | '머스타드' | '오렌지' | '버건디' | '플럼' | '블루그레이' | '빨강' | '블랙' | '마젠타'
+interface IProduct {
+  name: string
+  filmingDate: string
+  area: string
+  image: string
+  detail: {
+    title: string
+    image: string
+  }[]
+}
 
 type IPersonalColorKey = '겨울쿨톤' | '가을웜톤' | '봄웜톤' | '여름쿨톤'
 
-function Product() {
-  const classes = productStyle()
-  const location = useLocation()
-  const query = qs.parse(location.search, {
-    ignoreQueryPrefix: true,
-  })
-  const optionList = useMemo(() => ['상의', '하의', '악세서리', '신발', '화장품'], [])
-  const sortList = ['인기', '신상', '리뷰많은순', '낮은가격순', '높은가격순']
-  const colorList = ['아이보리', '오렌지레드', '코랄핑크', '카멜', '머스타드', '오렌지', '버건디', '플럼', '블루그레이', '빨강', '블랙', '마젠타']
-  const hexList = {
-    아이보리: '#ece6cc',
-    오렌지레드: '#d9381e',
-    코랄핑크: '#ff6f61',
-    카멜: '#bf8a3d',
-    머스타드: '#c3803b',
-    오렌지: '#FFA500',
-    버건디: '#760c0c',
-    플럼: '#681734',
-    블루그레이: '#6699cc',
-    빨강: '#ff0000',
-    블랙: 'black',
-    마젠타: '#ff0090',
-  }
-
-  const personalColorMatch = {
-    겨울쿨톤: ['빨강', '블랙', '마젠타'],
-    가을웜톤: ['카멜', '머스타드', '오렌지'],
-    봄웜톤: ['아이보리', '오렌지레드', '코랄핑크'],
-    여름쿨톤: ['버건디', '플럼', '블루그레이'],
-  }
-
+function Codi() {
+  const classes = codiStyle()
+  const colorList = ['흰색', '검정색', '회색', '갈색', '베이지색', '녹색', '파란색', '데님', '보라색', '노란색', '분홍색', '빨간색', '주황색', '은색', '금색', '기타']
   const [openColor, setOpenColor] = useState<boolean>(false)
-
-  const [data, setData] = useState<IProduct[]>([])
-  const [originData, setOriginData] = useState<IOriginData | null>(null)
-  const [category, setCategory] = useState<string>('')
   const [color, setColor] = useState<string>('')
-  const [checkEmpty, setCheckEmpty] = useState<boolean>(false)
   const [modal, setModal] = useState<boolean>(false)
+  const [originData, setOriginData] = useState<IOriginData | null>(null)
+  const [data, setData] = useState<IProduct[]>([])
 
   const [upload, setUpload] = useState<boolean>(false)
   const [imageName, setImageName] = useState<string>('')
@@ -68,6 +37,32 @@ function Product() {
   const [resultMessage, setResultMessage] = useState<string>('')
 
   const personalColor = localStorage.getItem('personalColor')
+
+  const hexList = {
+    흰색: '#ffffff',
+    검정색: 'black',
+    회색: 'gray',
+    갈색: '#bf8a3d',
+    베이지색: '#f5f5dc',
+    녹색: '#008000',
+    파란색: '#0067a3',
+    데님: '#000849',
+    보라색: '#8b00ff',
+    노란색: '#ffff00',
+    분홍색: 'ff3399',
+    빨간색: '#ff0000',
+    주황색: '#ff7f00',
+    은색: '#c0c0c0',
+    금색: '#FFD700',
+    기타: '#ffffff',
+  }
+
+  const personalColorMatch = {
+    겨울쿨톤: ['흰색', '검정색', '회색', '파란색', '분홍색', '보라색', '빨간색', '은색'],
+    가을웜톤: ['데님', '분홍색', '파란색'],
+    봄웜톤: ['갈색', '보라색', '보라색', '주황색', '금색'],
+    여름쿨톤: ['베이지색', '녹색', '노란색', '빨간색'],
+  }
 
   const dragOver = (e: any) => {
     e.preventDefault()
@@ -137,47 +132,30 @@ function Product() {
   }
 
   const getData = async () => {
-    const response = await fetch('http://localhost:4000/api/product')
+    const response = await fetch('http://localhost:4000/api/style')
     const product = await response.json()
 
     setOriginData(product)
 
-    const categoryKey = category === '' ? '상의' : category
-    const colorKey = color === '' ? '아이보리' : color
-
-    setData(product[categoryKey][colorKey])
+    setData(product[colorList[0]])
   }
 
   useEffect(() => {
     getData()
-    if (query.category === undefined) return
-    if (optionList.includes(query.category as string)) {
-      setCheckEmpty(false)
-      setCategory(query.category as string)
-      return
-    }
-    setCheckEmpty(true)
   }, [])
 
   useEffect(() => {
     if (originData === null) return
 
-    const categoryKey = category === '' ? '상의' : category
-    const colorKey = color === '' ? '아이보리' : color
+    const colorKey = color === '' ? '흰색' : color
 
-    setData(originData[categoryKey][colorKey])
-  }, [category, color, originData])
-
-  useEffect(() => {
-    if (optionList.includes(category)) {
-      setCheckEmpty(false)
-    }
-  }, [category, optionList])
+    setData(originData[colorKey])
+  }, [color])
 
   return (
-    <div className={classes.product}>
+    <div className={classes.codi}>
       <div className={classes.category}>
-        <div> {category === '' ? (query.category === undefined ? '상의' : (query.category as string).charAt(0).toUpperCase() + (query.category as string).slice(1)) : category}</div>
+        <div> Codi</div>
         <div className={classes.button}>
           <button onClick={() => setModal(true)}>제품 색 추출</button>
         </div>
@@ -199,22 +177,7 @@ function Product() {
                 marginLeft: '6px',
               }}
             >
-              <select
-                name=""
-                id=""
-                style={{ width: '100px', height: '28px', backgroundColor: 'inherit', color: '#ffffff' }}
-                onChange={(event: any) => setCategory(event.target.value)}
-                defaultValue={category}
-              >
-                <option style={{ color: 'black' }} value="" disabled>
-                  선택 안됨
-                </option>
-                {optionList.map((v, i) => (
-                  <option style={{ color: 'black' }} key={`option-category-${i}`} value={v}>
-                    {v}
-                  </option>
-                ))}
-              </select>
+              Codi
             </div>
           </div>
         </div>
@@ -254,57 +217,34 @@ function Product() {
                         </React.Fragment>
                       )}
                     </div>
+                    {v === '기타' && <span style={{ color: 'black', display: 'flex', justifyContent: 'center', fontWeight: 'bold' }}>?</span>}
                   </div>
                 ))}
               </div>
             )}
           </div>
-
-          <div
-            style={{
-              display: 'flex',
-            }}
-          >
-            <div>{`Sort >`}</div>
-            <div
-              style={{
-                marginLeft: '6px',
-              }}
-            >
-              <select name="" id="" style={{ width: '100px', height: '28px', backgroundColor: 'inherit', color: '#ffffff' }}>
-                {sortList.map((v, i) => (
-                  <option style={{ color: 'black' }} key={`option-sort-${i}`} value={v}>
-                    {v}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
         </div>
       </div>
 
-      {checkEmpty === false && (
-        <div className={classes.content}>
-          {data.map((v, i) => (
-            <a className={classes.wrapper} href={v.link} key={`product-content-${i}`}>
-              <div className={classes.item}>
-                <div className={classes.img}>
-                  <img src={v.imgLink} alt="" />
-                </div>
-                <div className={classes.one}>쿠팡</div>
-                <div className={classes.two}>{v.itemName}</div>
-                <div className={classes.bottom}>
-                  <div>{v.price.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')}원</div>
-                  <div>
-                    <FavoriteBorder />
-                  </div>
+      <div className={classes.content}>
+        {data.map((v, i) => (
+          <a className={classes.wrapper} key={`coid-product-${i}`}>
+            <div className={classes.item}>
+              <div className={classes.img}>
+                <img src={v.image} alt="" />
+              </div>
+              <div className={classes.one}>{v.name}</div>
+              <div className={classes.two}>{v.area}</div>
+              <div className={classes.bottom}>
+                <div>{v.filmingDate}</div>
+                <div>
+                  <FavoriteBorder />
                 </div>
               </div>
-            </a>
-          ))}
-        </div>
-      )}
-      {checkEmpty === true && <div>아직 준비된 제품이 없습니다.</div>}
+            </div>
+          </a>
+        ))}
+      </div>
 
       {modal === true && (
         <React.Fragment>
@@ -374,4 +314,4 @@ function Product() {
   )
 }
 
-export default Product
+export default Codi
